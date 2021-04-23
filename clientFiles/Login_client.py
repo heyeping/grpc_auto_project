@@ -65,11 +65,11 @@ class LoginClient():
 
 if __name__ == "__main__":
     ads = "referenceapp-test.ayla.com.cn:9098"
-    #phone = "13267925075"
-    #verCode = "146545"
+    phone = "13267925075"
+    verCode = "957858"
     loginTest = LoginClient(ads)
-    loginTest.sendCode("13267925075")
-    #token = loginTest.login(phone,verCode)
+    #loginTest.sendCode("13267925075")
+    token = loginTest.login(phone,verCode)
     #print(token)
 
 

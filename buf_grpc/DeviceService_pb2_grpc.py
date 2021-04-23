@@ -2,8 +2,8 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import Base_pb2 as Base__pb2
-import DeviceService_pb2 as DeviceService__pb2
+from buf_grpc import Base_pb2 as Base__pb2
+from buf_grpc import DeviceService_pb2 as DeviceService__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 

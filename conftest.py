@@ -8,8 +8,8 @@ import pytest
 import grpc
 
 
-@pytest.fixture(scope="class")
-def test_init_channel():
+#@pytest.fixture(scope="class")
+def init_channel():
     pem = '''
     -----BEGIN CERTIFICATE-----
 MIIHSDCCBjCgAwIBAgIQNdS/rt77ogQAAAAAUPfrsTANBgkqhkiG9w0BAQsFADCB
@@ -89,4 +89,4 @@ Lcw=
     creds = grpc.ssl_channel_credentials(bytes(pem, encoding="utf-8"))
     channel = grpc.secure_channel(target="referenceapp-test.ayla.com.cn:9098", credentials=creds)
     # channel=grpc.insecure_channel("106.15.231.103:9098")
-    yield channel
+    return channel

@@ -3,8 +3,10 @@ testhost:
   prodAds: referenceapp-test.ayla.com.cn:9098
 
 user:
-  phone: 13267925075
-  verCode: xxx
+  phone1: 13267925075
+
+verCode:
+
 
 devices:
   cuId:
