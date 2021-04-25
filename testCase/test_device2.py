@@ -7,7 +7,9 @@
 import pytest,os
 from clientFiles.Device_client import Device_client
 from conftest import init_channel
+import allure
 
+@allure.feature('设备相关接口')
 class TestDevice():
 
     def setup_class(self):
@@ -15,6 +17,7 @@ class TestDevice():
         self.yamlFile = os.path.join(self.base_url, 'config', 'token.yaml')
         self.dc = Device_client(self.yamlFile)
 
+    @allure.story("正向：绑定设备")
     def test_bindDevice_01(self):
         """
         正向绑定设备
@@ -24,7 +27,7 @@ class TestDevice():
         #print(res)
         assert res
 
-    #@pytest.mark.parametrize("cuId,deviceId,nickName", [{0, "1213", "tests"}, {0, "AC000W017943747", "sdhughhugheuhguehdhdhuwhuwhruehufheuwhfuwehf"}])
+    @allure.story("设备名称为空")
     def test_bindDevice_02(self):
         """
         设备名称为空或超过限制
@@ -34,6 +37,7 @@ class TestDevice():
         #print(res)
         assert "device nickname is invalid" in res
 
+    @allure.story("deviceId为空")
     def test_bidDevice_03(self):
         """
         deviceId为空
@@ -87,14 +91,14 @@ class TestDevice():
 
     def test_getDeviceInfo_03(self):
         """
-        正向的
+        正向获取设备信息
         :return:
         """
         res = self.dc.getDeviceInfo("AC000W017943747")
         assert "AC000W017943747" in res
 
     @pytest.mark.parametrize("deviceId,propertyName,propertyValue",
-                             [{"", "", ""},
+                             [
                               {"", "Switch_Control", "1"},
                               {"AC000W017943747", "", "1"},
                               {"AC000W017943747", "Switch_Control", ""}
@@ -111,8 +115,20 @@ class TestDevice():
         res = self.dc.setDeviceProperty(deviceId=deviceId, propertyName=propertyName, propertyValue=propertyValue)
         assert "server error" in res
 
-
+    def test_setDeviceProperty_02(self, deviceId, propertyName, propertyValue):
+        """
+        正向的设置设备属性
+        :param deviceId:
+        :param propertyName:
+        :param propertyValue:
+        :return:
+        """
 
 
 if __name__ == '__main__':
-    pytest.main(["-vs", 'test_device2.py'])
+    base_url = os.path.abspath(os.path.dirname(os.getcwd()))
+    reportFile = os.path.join(base_url, 'report')
+    #print(reportFile)
+    pytest.main(["-vs", 'test_device2.py', f'--alluredir={reportFile}/data'])
+    # 本地生成报告
+    os.system(f'allure generate {reportFile}/data -o {reportFile}/html --clean')
